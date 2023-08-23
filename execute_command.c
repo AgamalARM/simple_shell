@@ -24,7 +24,8 @@ int exec_command(char **args)
 		if (exec_stat == -1)
 		{
 			free(args);
-			return (-1);
+			perror("./hsh");
+			return (errno);
 		}
 	} else
 	{
