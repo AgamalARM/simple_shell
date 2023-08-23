@@ -9,9 +9,15 @@ void loop(void)
 	char *path;
 
 	path = getenv("PATH");
-	while (1)
+	if (isatty(STDIN_FILENO) == 0)
 	{
-		printf("$ ");
 		REP(path);
+	} else
+	{
+		while (1)
+		{
+			printf("$ ");
+			REP(path);
+		}
 	}
 }
