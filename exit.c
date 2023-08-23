@@ -12,6 +12,9 @@ int exit_func(char __attribute__((unused)) **command)
 	int stat;
 	char *status;
 
+	if (command[1] == NULL)
+		exit(0);
+
 	if (command[2] != NULL)
 	{
 		printf("./hsh: exit: too many arguments\n");

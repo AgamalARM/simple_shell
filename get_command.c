@@ -14,7 +14,6 @@ char *get_command(void)
 
 	if (getline(&command, &len, stdin) == -1)
 	{
-		fflush(stdin);
 		exit(EXIT_SUCCESS);
 	}
 	return (command);
