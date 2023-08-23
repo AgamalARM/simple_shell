@@ -1,4 +1,10 @@
 #include "shell.h"
+/**
+ * tok - tokenize the entire list of commands
+ * @com: command
+ *
+ * Return: tokenized command
+ */
 
 char **tok(char *com)
 {
@@ -34,6 +40,14 @@ char **tok(char *com)
 	args[i] = NULL;
 	return (args);
 }
+
+/**
+ * loopREP - for non interactive mode
+ * @paths: path
+ * @command: command
+ *
+ * Return: o on success
+ */
 
 int loopREP(char *paths, char *command)
 {
