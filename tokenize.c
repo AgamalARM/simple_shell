@@ -1,44 +1,46 @@
 #include "shell.h"
-
 /**
- * tokenize - tokenizes the command
- * as arguments into an array
- * @command: command to be tokenzed
- *
- * Return: the array of arguments that
- * are tokenized
+ * tokenize - the function is separating each string with the delimiter
+ * @data: the data pointer to code of data
+ * Return: the array to a different elements of the string
  */
-char **tokenize(char *command)
+void tokenize(data_of_program *data)
 {
-	char **args;
-	size_t arg_count = 0, i;
-	char  *delim = " \n\t", *token, *cmd_dup;
+	char *delimiter = " \t";     /*** define an char pointer ***/
+	int i, j, counter = 2, length; /*** define variables ***/
 
-	cmd_dup = malloc(sizeof(char) * (strlen(command) + 1));
-	cmd_dup = strdup(command);
-	token = strtok(command, delim);
-
-	while (token)
+	length = str_length(data->input_line);
+	/*********  if statement       **********************/
+	if (length)
 	{
-		token = strtok(NULL, delim);
-		arg_count++;
+		if (data->input_line[length - 1] == '\n')
+			data->input_line[length - 1] = '\0';
+	}
+	/*********  for statement       **********************/
+
+	for (i = 0; data->input_line[i]; i++)
+	{
+		for (j = 0; delimiter[j]; j++)
+		{
+			/*********  if statement       **********************/
+			if (data->input_line[i] == delimiter[j])
+				counter++;     /**   define counter**/
+		}
 	}
 
-	args = malloc(sizeof(char *) * (arg_count + 1));
-	if (args == NULL)
+	data->tokens = malloc(counter * sizeof(char *));
+	/*********  if statement       **********************/
+	if (data->tokens == NULL)
 	{
-		perror("./hsh");
-		return (NULL);
+		perror(data->program_name);
+		exit(errno);
 	}
-
-	token = strtok(cmd_dup, delim);
 	i = 0;
-	while (token)
+	data->tokens[i] = str_duplicate(_strtok(data->input_line, delimiter));
+	data->command_name = str_duplicate(data->tokens[0]);
+	/*********  while loop  statement       **********************/
+	while (data->tokens[i++])
 	{
-		args[i] = token;
-		token = strtok(NULL, delim);
-		i++;
+		data->tokens[i] = str_duplicate(_strtok(NULL, delimiter));
 	}
-	args[i] = NULL;
-	return (args);
 }
